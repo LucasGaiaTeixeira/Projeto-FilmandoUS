@@ -1,0 +1,6 @@
+@FilmanduOS_HostAddress = http://localhost:5155
+
+GET {{FilmanduOS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
