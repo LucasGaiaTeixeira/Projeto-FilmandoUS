@@ -15,6 +15,7 @@ namespace FilmanduOS.models
         //esse range é um atributo de validação que especifica um intervalo válido para a propriedade Duracao. No caso, o valor mínimo permitido é 70 e o valor máximo permitido é 300. Se o valor fornecido para a propriedade Duracao estiver fora desse intervalo, a validação falhará e uma mensagem de erro será gerada indicando que o tempo de duração é inválido e solicitando que seja inserido um valor dentro do intervalo permitido.
         [Required(ErrorMessage ="precisa do titulo")]
         [MaxLength(65, ErrorMessage ="o tamanho do nome esta muito grande ensira o nome correto")]
+        //outra coisa quando for no dto que para maxLenght é para dizer qual o tamanho do banco em ORM usamos no dto [StringLength(65, errorMessage = "")] que e para dizer que a string tem que ter esse tamanho mas,não tem poder de alterar  em nada o banco de dados diferente da que esta porque não fiz o DTO
         [JsonPropertyName("Name")]
         public string Nome { get; set; }
 

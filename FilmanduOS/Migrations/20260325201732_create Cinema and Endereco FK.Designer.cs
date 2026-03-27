@@ -3,6 +3,7 @@ using FilmanduOS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmanduOS.Migrations
 {
     [DbContext(typeof(BancoDados))]
-    partial class BancoDadosModelSnapshot : ModelSnapshot
+    [Migration("20260325201732_create Cinema and Endereco FK")]
+    partial class createCinemaandEnderecoFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +55,9 @@ namespace FilmanduOS.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CinemaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Logradouro")
                         .IsRequired()

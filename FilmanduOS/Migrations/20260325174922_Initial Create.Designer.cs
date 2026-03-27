@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmanduOS.Migrations
 {
     [DbContext(typeof(BancoDados))]
-    [Migration("20260307134500_CriandoTabelaFilmes")]
-    partial class CriandoTabelaFilmes
+    [Migration("20260325174922_Initial Create")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,43 @@ namespace FilmanduOS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Filmes");
+                });
+
+            modelBuilder.Entity("FilmanduOS.models.Musica", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Ano")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasAnnotation("Relational:JsonPropertyName", "year");
+
+                    b.Property<string>("Artista")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasAnnotation("Relational:JsonPropertyName", "artist");
+
+                    b.Property<double>("Duracao")
+                        .HasColumnType("double")
+                        .HasAnnotation("Relational:JsonPropertyName", "tempo");
+
+                    b.Property<string>("Genero")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasAnnotation("Relational:JsonPropertyName", "genre");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasAnnotation("Relational:JsonPropertyName", "song");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Musicas");
                 });
 #pragma warning restore 612, 618
         }

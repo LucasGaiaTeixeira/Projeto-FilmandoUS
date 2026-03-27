@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmanduOS.Migrations
 {
     [DbContext(typeof(BancoDados))]
-    [Migration("20260309133118_createBancoDadosMusica")]
-    partial class createBancoDadosMusica
+    [Migration("20260325203329_deixando somente fk em Cinema")]
+    partial class deixandosomentefkemCinema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,51 @@ namespace FilmanduOS.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("FilmanduOS.models.Cinema", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
+
+                    b.ToTable("Cinemas");
+                });
+
+            modelBuilder.Entity("FilmanduOS.models.Endereco", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Enderecos");
+                });
 
             modelBuilder.Entity("FilmanduOS.models.Filme", b =>
                 {
@@ -70,8 +115,9 @@ namespace FilmanduOS.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Ano")
-                        .HasColumnType("int")
+                    b.Property<string>("Ano")
+                        .IsRequired()
+                        .HasColumnType("longtext")
                         .HasAnnotation("Relational:JsonPropertyName", "year");
 
                     b.Property<string>("Artista")
@@ -79,12 +125,13 @@ namespace FilmanduOS.Migrations
                         .HasColumnType("longtext")
                         .HasAnnotation("Relational:JsonPropertyName", "artist");
 
-                    b.Property<int>("Duracao")
-                        .HasColumnType("int")
+                    b.Property<double>("Duracao")
+                        .HasColumnType("double")
                         .HasAnnotation("Relational:JsonPropertyName", "tempo");
 
-                    b.Property<int>("Genero")
-                        .HasColumnType("int")
+                    b.Property<string>("Genero")
+                        .IsRequired()
+                        .HasColumnType("longtext")
                         .HasAnnotation("Relational:JsonPropertyName", "genre");
 
                     b.Property<string>("Nome")
@@ -95,6 +142,23 @@ namespace FilmanduOS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Musicas");
+                });
+
+            modelBuilder.Entity("FilmanduOS.models.Cinema", b =>
+                {
+                    b.HasOne("FilmanduOS.models.Endereco", "Endereco")
+                        .WithOne("Cinema")
+                        .HasForeignKey("FilmanduOS.models.Cinema", "EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("FilmanduOS.models.Endereco", b =>
+                {
+                    b.Navigation("Cinema")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
